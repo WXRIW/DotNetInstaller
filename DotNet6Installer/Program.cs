@@ -8,13 +8,31 @@ namespace DotNet6Installer
     {
         static void Main(string[] args)
         {
-            if (!args.Contains("-f"))
+            if (!args.Contains("--force"))
             {
                 if (!SingleInstance.IsMainInstance)
                 {
                     Console.WriteLine("Found existing instance, exiting");
                     return;
                 }
+            }
+
+            if (args.Contains("--info"))
+            {
+                string ConvertBoolStateToStateString(bool? value)
+                {
+                    return value switch
+                    {
+                        true => "Installed",
+                        false => "Not installed",
+                        null => "Not supported"
+                    };
+                }
+
+                Console.WriteLine("x86: " + ConvertBoolStateToStateString(DetectHelper.IsRuntimeInstalled(Architecture.X86)));
+                Console.WriteLine("x64: " + ConvertBoolStateToStateString(DetectHelper.IsRuntimeInstalled(Architecture.X64)));
+                Console.WriteLine("Arm64: " + ConvertBoolStateToStateString(DetectHelper.IsRuntimeInstalled(Architecture.Arm64)));
+                return;
             }
 
             Architecture? architecture = null;
@@ -32,7 +50,7 @@ namespace DotNet6Installer
             }
             architecture ??= ArchitectureHelper.OSArchitecture;
 
-            if (!args.Contains("-i"))
+            if (!args.Contains("--ignore"))
             {
                 // Check currently installed version
                 if (DetectHelper.IsRuntimeInstalled(architecture.Value) != false)
@@ -43,15 +61,6 @@ namespace DotNet6Installer
             }
 
             string filePath = DownloadDotNet6(architecture.Value).Result;
-
-            //int messageIndex = Array.IndexOf(args, "-m");
-            //if (messageIndex!=-1 && messageIndex < args.Length - 1)
-            //{
-            //    if (!args[messageIndex + 1].StartsWith("-"))
-            //    {
-            //        MessageBox.Show(args[messageIndex + 1]);
-            //    }
-            //}
 
             InstallDotNet(filePath);
         }
