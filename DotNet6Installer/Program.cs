@@ -19,7 +19,7 @@ namespace DotNet6Installer
 
             if (args.Contains("--info"))
             {
-                string ConvertBoolStateToStateString(bool? value)
+                static string ConvertBoolStateToStateString(bool? value)
                 {
                     return value switch
                     {
@@ -40,7 +40,7 @@ namespace DotNet6Installer
             {
                 architecture = Architecture.X86;
             }
-            else if (args.Contains ("x64"))
+            else if (args.Contains("x64"))
             {
                 architecture = Architecture.X64;
             }
