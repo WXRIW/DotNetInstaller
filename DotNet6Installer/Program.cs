@@ -31,6 +31,17 @@ namespace DotNet6Installer
                 architecture = Architecture.Arm64;
             }
             architecture ??= ArchitectureHelper.OSArchitecture;
+
+            if (!args.Contains("-i"))
+            {
+                // Check currently installed version
+                if (DetectHelper.IsRuntimeInstalled(architecture.Value) != false)
+                {
+                    Console.WriteLine("Installed or not supported by the OS");
+                    return;
+                }
+            }
+
             string filePath = DownloadDotNet6(architecture.Value).Result;
 
             //int messageIndex = Array.IndexOf(args, "-m");
