@@ -16,7 +16,7 @@
                     {
                         if (!isMainInstance.HasValue)
                         {
-                            mutex = new Mutex(true, "Lyricify.For.Spotify", out var createdNew);
+                            mutex = new Mutex(true, "DotNetInstaller", out var createdNew);
                             isMainInstance = createdNew;
                             if (!createdNew)
                             {

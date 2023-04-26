@@ -32,6 +32,7 @@ namespace DotNet6Installer
                 Console.WriteLine("x86: " + ConvertBoolStateToStateString(DetectHelper.IsRuntimeInstalled(Architecture.X86)));
                 Console.WriteLine("x64: " + ConvertBoolStateToStateString(DetectHelper.IsRuntimeInstalled(Architecture.X64)));
                 Console.WriteLine("Arm64: " + ConvertBoolStateToStateString(DetectHelper.IsRuntimeInstalled(Architecture.Arm64)));
+                Console.ReadKey();
                 return;
             }
 
